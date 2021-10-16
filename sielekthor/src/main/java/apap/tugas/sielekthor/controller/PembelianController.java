@@ -73,11 +73,14 @@ public class PembelianController {
 
     @PostMapping("/pembelian/hapus/{idPembelian}")
     public String deletePembelianSubmit(
-            @ModelAttribute PembelianModel pembelian,
+            @PathVariable Long idPembelian,
             Model model
     ){
+
+            PembelianModel pembelian = pembelianService.getPembelianByIdPembelian(idPembelian);
             pembelianService.deletePembelian(pembelian);
-            model.addAttribute("pembelian", pembelian.getNoInvoice());
+            model.addAttribute("pembelian", pembelian);
+            model.addAttribute("pembelian2", pembelian.getNoInvoice());
             return "hapus-pembelian";
     }
 }
