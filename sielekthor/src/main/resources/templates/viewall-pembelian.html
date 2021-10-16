@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SIELEKTHOR</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Daftar Pembelian</h2>
+                <br>
+                <div class="d-flex justify-content-center">
+                    <a th:href="@{...}" class="mx-2 btn btn-primary"> + Tambah Pembelian </a>
+                </div>
+                <br>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>No Invoice</th>
+                        <th>Total Harga</th>
+                        <th>Member</th>
+                        <th>Jumlah Barang</th>
+                        <th>Tanggal Pembelian</th>
+                        <th>Aksi</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="pembelian, iterationStatus : ${listPembelian}"
+                        th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${pembelian.noInvoice}"></td>
+                        <td th:text="${pembelian.totalPembelian}"></td>
+                        <td th:text="${pembelian.totalPembelian}"></td>
+                        <td th:each="member: ${listMember}" th:value="${member.idMember}" th:text="${member.namaMember}"></td>
+                        <td th:text="${pembelian.jumlah_barang()}"></td>
+                        <td th:text="${pembelian.format_tanggal_pembelian()}"></td>
+                        <td>
+                            <a class="btn btn-primary" th:href=" @{/pembelian/} + ${pembelian.idPembelian}">Lihat</a>
+                            <a class="btn btn-primary" th:href="@{/pembelian/hapus/} + ${pembelian.idPembelian}">Hapus</a>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

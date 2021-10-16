@@ -1,0 +1,83 @@
+package apap.tugas.sielekthor.controller;
+
+import apap.tugas.sielekthor.model.*;
+import apap.tugas.sielekthor.service.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalTime;
+
+@Controller
+public class PembelianController {
+
+    @Qualifier("pembelianServiceImpl")
+    @Autowired
+    private PembelianService pembelianService;
+
+    @Qualifier("memberServiceImpl")
+    @Autowired
+    private MemberService memberService;
+
+    @Qualifier("barangServiceImpl")
+    @Autowired
+    private BarangService barangService;
+
+    @Qualifier("pembelianBarangServiceImpl")
+    @Autowired
+    private PembelianBarangService pembelianBarangService;
+
+    @GetMapping("/pembelian")
+    public String listPembelian(Model model){
+        List<PembelianModel> listPembelian = pembelianService.getListPembelian();
+        model.addAttribute("listPembelian", listPembelian);
+
+        List<MemberModel> listMember = memberService.getListMember();
+        model.addAttribute("listMember",listMember);
+
+        List<PembelianBarangModel> listPembelianBarang = pembelianBarangService.getListPembelianBarang();
+        model.addAttribute("listPembelianBarang",listPembelianBarang);
+
+        return "viewall-pembelian";
+    }
+
+    @GetMapping("/pembelian/{idPembelian}")
+    public String lihatDetailPembelian(
+            @PathVariable Long idPembelian,
+            Model model
+    ){
+        PembelianModel pembelian =pembelianService.getPembelianByIdPembelian(idPembelian);
+        model.addAttribute("pembelian", pembelian);
+
+        List<PembelianModel> listPembelian =pembelianService.getListPembelian();
+        model.addAttribute("listPembelian",listPembelian);
+
+        List<PembelianBarangModel> listPembelianBarang = pembelianBarangService.getListPembelianBarang();
+        model.addAttribute("listPembelianBarang",listPembelianBarang);
+        model.addAttribute("getListPembelianBarang", pembelian.list_pembelian_barang());
+
+        List<MemberModel> listMember = memberService.getListMember();
+        model.addAttribute("listMember",listMember);
+
+        List<BarangModel> listBarang = barangService.getListBarang();
+        model.addAttribute("listBarang",listBarang);
+
+        return "view-pembelian";
+    }
+
+    @PostMapping("/pembelian/hapus/{idPembelian}")
+    public String deletePembelianSubmit(
+            @ModelAttribute PembelianModel pembelian,
+            Model model
+    ){
+            pembelianService.deletePembelian(pembelian);
+            model.addAttribute("pembelian", pembelian.getNoInvoice());
+            return "hapus-pembelian";
+    }
+}

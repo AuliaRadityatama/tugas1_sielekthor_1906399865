@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PergiPergi</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Daftar Barang</h2>
+                <br>
+                <div class="d-flex justify-content-center">
+                    <a th:href="@{/barang/tambah}" class="mx-2 btn btn-primary"> + Tambah Barang </a>
+                </div>
+                <br>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Tipe</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="barang, iterationStatus : ${listBarang}"
+                        th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${barang.namaBarang}"></td>
+                        <td th:text="${barang.hargaBarang}"></td>
+                        <td th:each="tipe: ${listTipe}" th:value="${tipe.idTipe}" th:text="${tipe.namaTipe}"></td>
+                        <td th:text="${barang.stok}"></td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{/barang/} +  ${barang.idBarang}">Lihat</a>
+                            <a class="btn btn-primary" th:href="@{/barang/ubah/} +  ${barang.idBarang}">Ubah</a>
+                            <a class="btn btn-primary" th:href="...">Hapus</a>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
