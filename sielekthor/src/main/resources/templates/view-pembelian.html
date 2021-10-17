@@ -17,7 +17,7 @@
                 <br>
                 <p th:text="'No Invoice    : ' + ${pembelian.noInvoice}"></p>
                 <p th:text="'Total Harga  : ' + ${pembelian.totalPembelian}"></p>
-                <p th:each="member: ${listMember}" th:value="${member.idMember}" th:text="'Member: ' + ${member.namaMember}"></p>
+                <p th:text="'Member: ' + ${pembelian.id_member.namaMember}"></p>
                 <p th:text="'Jumlah Barang: ' + ${pembelian.jumlah_barang()}"></p>
                 <p th:text="'Tanggal Pembelian: ' + ${pembelian.format_tanggal_pembelian()}"></p>
                 <p th:text="'Nama Admin: ' + ${pembelian.namaAdmin}"></p>
@@ -45,18 +45,18 @@
                 </thead>
 
                 <tbody>
-                <tr th:each="listPembelianBarang, iterationStatus : ${getListPembelianBarang}"
+                <tr th:each="pembelianBarang, iterationStatus : ${getListPembelianBarang}"
                     th:style="${iterationStatus.even} ? 'font-weight:bold;'">
                     <td th:text="${iterationStatus.count}"></td>
-                    <td th:each="barang: ${listBarang}" th:value="${barang.idBarang}" th:text="${barang.namaBarang}"></td>
-                    <td th:each="barang: ${listBarang}" th:value="${barang.idBarang}" th:text="${barang.merkBarang}"></td>
-                    <td th:each="barang: ${listBarang}" th:value="${barang.idBarang}" th:text="${barang.tipeBarang}"></td>
-                    <td th:text="${getListPembelianBarang.tanggalGaransi}"></td>
-                    <td th:each="barang: ${listBarang}" th:value="${barang.idBarang}" th:text="${barang.hargaBarang}"></td>
-                    <td th:text="${getListPembelianBarang.quantity}"></td>
-                    <th:block th:with="variable1 = ${getListPembelianBarang.quantity},
-                                        variable2 = ${listBarang.idBarang.hargaBarang},
-                                        var = ${variable1 * variable2}">
+                    <td th:text="${pembelianBarang.id_barang.namaBarang}"></td>
+                    <td th:text="${pembelianBarang.id_barang.merkBarang}"></td>
+                    <td th:text="${pembelianBarang.id_barang.id_tipe.namaTipe}"></td>
+                    <td th:text="${pembelianBarang.tanggalGaransi}"></td>
+                    <td th:text="${pembelianBarang.id_barang.hargaBarang}"></td>
+                    <td th:text="${pembelianBarang.quantity}"></td>
+                    <th:block th:with="variable = ${pembelianBarang.id_barang.hargaBarang},
+                                        controllerVar = ${pembelianBarang.quantity},
+                                        var = ${variable * controllerVar}">
                         <td th:text="${var}"></td>
                     </th:block>
 
@@ -65,7 +65,7 @@
             </table>
 
             <div class="justify-content-center">
-                <a class="btn btn-primary" href="/pembelian">Kembali</a>
+                <a class="btn btn-primary" th:href="@{/pembelian}">Kembali</a>
             </div>
         </div>
     </div>

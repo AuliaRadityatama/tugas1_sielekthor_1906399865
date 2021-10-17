@@ -26,7 +26,7 @@
                     <br><br>
 
                     Tanggal lahir:  <br>
-                    <input class="form-control" type="date" name="tanggalLahir" th:value="*{tanggalLahir}"/>
+                    <input class="form-control" type="date" name="tanggalLahir" th:value="${{member.tanggalLahir}}"/>
                     <br><br>
 
                     Tanggal pendaftaran:  <br>
@@ -52,7 +52,7 @@
 
                     <div  th:if="${member.jenisKelamin} == 1">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="jenisKelamin" id="exampleRadios3" value="0"/>
+                            <input class="form-check-input" type="radio" name="jenisKelamin" id="exampleRadios3" value="0" />
                             <label class="form-check-label" for="exampleRadios3">
                                 Laki-laki
                             </label>
@@ -67,7 +67,7 @@
                     </div>
 
                     <button class="btn btn-primary" type="submit">Submit</button>
-                    <a class="btn btn-primary" href="@{/member}">Batal</a>
+                    <a class="btn btn-primary" th:href="@{/member}">Batal</a>
                 </form>
             </div>
         </div>

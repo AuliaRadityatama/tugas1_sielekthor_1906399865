@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.time.LocalTime;
 
@@ -62,5 +64,22 @@ public class MemberController {
         MemberModel updatedMember = memberService.updateMember(member);
         model.addAttribute("member", updatedMember.getNamaMember());
         return "update-member";
+    }
+
+    @GetMapping("/bonus/cari/member/paling-banyak")
+    public String topMember(Model model){
+        List<MemberModel> listMember = memberService.getListMember();
+
+        for(int i=0; i<listMember.size(); i++){
+            for(int j=i+1; j<listMember.size(); j++){
+                if(listMember.get(i).get_jumlah_pembelian() < listMember.get(j).get_jumlah_pembelian()){
+                    MemberModel temp = listMember.get(i);
+                    listMember.set(i, listMember.get(j));
+                    listMember.set(j, temp);
+                }
+            }
+        }
+        model.addAttribute("listMember", listMember);
+        return "viewall-top-member";
     }
 }

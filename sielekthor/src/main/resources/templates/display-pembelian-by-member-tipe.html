@@ -13,12 +13,41 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2>Daftar Pembelian</h2>
+                <h2>Cari Pembelian</h2>
                 <br>
-                <div class="d-flex justify-content-center">
-                    <a th:href="@{...}" class="mx-2 btn btn-primary"> + Tambah Pembelian </a>
-                </div>
                 <br>
+                <form th:action="@{/cari/pembelian}" th:object="${listMember}" method="GET">
+
+                    Member<br>
+                    <td>
+                        <select name="idMember">
+                            <option value=""></option>
+                            <option th:each="member: ${listMember}" th:value="${member.idMember}" th:text="${member.namaMember}" />
+                            </option>
+                        </select>
+                    </td>
+                    <br><br>
+
+                    Pembayaran<br>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipePembayaran" id="exampleRadios1" value="1" />
+                        <label class="form-check-label" for="exampleRadios1">
+                            Tunai
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="tipePembayaran" id="exampleRadios2" value="0" />
+                        <label class="form-check-label" for="exampleRadios2">
+                            Cicilan
+                        </label>
+                    </div>
+                    <br><br>
+
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <a class="btn btn-primary" th:href="@{/}">Kembali</a>
+                </form>
+
+                <br><br>
                 <table class="table">
                     <thead>
                     <tr>
@@ -33,7 +62,7 @@
                     </thead>
 
                     <tbody>
-                    <tr th:each="pembelian, iterationStatus : ${listPembelian}"
+                    <tr th:each="pembelian, iterationStatus : ${listPembelianFinal}"
                         th:style="${iterationStatus.even} ? 'font-weight:bold;'">
                         <td th:text="${iterationStatus.count}"></td>
                         <td th:text="${pembelian.noInvoice}"></td>

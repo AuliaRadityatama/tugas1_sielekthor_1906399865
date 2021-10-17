@@ -72,4 +72,16 @@ public class BarangModel implements Serializable{
     //Relasi FK dari PEMBELIAN_BARANG
     @OneToMany(mappedBy = "id_barang", fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PembelianBarangModel> listPembelianBarang;
+
+    public int get_stok_barang(){
+        return stok;
+    }
+
+    public String get_nama_tipe(){
+        return id_tipe.getNamaTipe();
+    }
+
+    public Long get_id_tipe(){
+        return id_tipe.getIdTipe();
+    }
 }
