@@ -32,7 +32,7 @@ public class PembelianServiceImpl implements PembelianService{
 
     @Override
     public PembelianModel getPembelianByIdPembelian(Long idPembelian){
-        Optional<PembelianModel> pembelian = pembelianDB.findByIdPembelian(idPembelian);
+        Optional<PembelianModel> pembelian = pembelianDB.findById(idPembelian);
         if(pembelian.isPresent()) return pembelian.get();
         else return null;
     }

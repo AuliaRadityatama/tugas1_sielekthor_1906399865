@@ -42,4 +42,12 @@ public class TipeModel implements Serializable{
     //Relasi FK dari BARANG
     @OneToMany(mappedBy = "id_tipe", fetch= FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BarangModel> listBarang;
+
+    public String get_nama_tipe(){
+        return namaTipe;
+    }
+
+    public Long get_id_tipe(){
+        return idTipe;
+    }
 }

@@ -86,4 +86,17 @@ public class PembelianModel implements  Serializable{
         return listPembelianBarang;
     }
 
+    public Long get_id_of_member(){
+        return id_member.getIdMember();
+    }
+
+    public int get_id_of_metode_bayar(){
+        if(isCash){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
 }

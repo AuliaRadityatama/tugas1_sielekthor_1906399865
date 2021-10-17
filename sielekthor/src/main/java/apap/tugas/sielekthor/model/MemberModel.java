@@ -65,4 +65,8 @@ public class MemberModel implements Serializable{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return var.format(formatter);
     }
+
+    public int get_jumlah_pembelian(){
+        return listPembelian.size();
+    }
 }

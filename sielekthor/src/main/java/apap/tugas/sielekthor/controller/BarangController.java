@@ -29,6 +29,10 @@ public class BarangController {
     @Autowired
     private TipeService tipeService;
 
+    @Qualifier("pembelianServiceImpl")
+    @Autowired
+    private PembelianService pembelianService;
+
     @GetMapping("/barang")
     public String listBarang(Model model){
         List<BarangModel> listBarang = barangService.getListBarang();
@@ -88,5 +92,41 @@ public class BarangController {
         BarangModel updatedBarang = barangService.updateBarang(barang);
         model.addAttribute("kode", updatedBarang.getKodeBarang());
         return "update-barang";
+    }
+
+    @GetMapping(value="/barang/cari")
+    public String displayBarangHabisFormPage(
+            @ModelAttribute BarangModel barang,
+            Model model
+    ){
+        List<BarangModel> listBarang = barangService.getListBarang();
+        model.addAttribute("listBarang", listBarang);
+
+        List<TipeModel> listTipe = tipeService.getListTipe();
+        model.addAttribute("listTipe", listTipe);
+
+        return "form-barang-cari-stok-habis";
+    }
+
+    @GetMapping(value="/barang/tipe/stok")
+    public String displayBarangHabisSubmitPage(
+            @RequestParam Long idTipe,
+            @RequestParam int stok,
+            @ModelAttribute BarangModel barangModel,
+            Model model) {
+        List<BarangModel> listBarang = barangService.getListBarang();
+        ArrayList<BarangModel> listBarangFinal = new ArrayList<>();
+        for (BarangModel i : listBarang){
+            if (i.get_stok_barang() == stok && i.get_id_tipe().equals(idTipe)){
+                listBarangFinal.add(i);
+            }
+        }
+        model.addAttribute("listBarang", listBarang);
+
+        List<TipeModel> listTipe = tipeService.getListTipe();
+        model.addAttribute("listTipe", listTipe);
+
+        model.addAttribute("listBarangFinal", listBarangFinal);
+        return "display-barang-cari-stok-habis";
     }
 }

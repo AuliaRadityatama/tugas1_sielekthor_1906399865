@@ -47,7 +47,7 @@
                     Tipe Barang<br>
                     <td>
                         <select name="id_tipe">
-                            <option th:each="tipe: ${listTipe}" th:value="${tipe.idTipe}" th:text="${tipe.namaTipe}" th:readonly="readonly"/>
+                            <option th:value="${{barang.id_tipe}}" th:text="${{barang.id_tipe.namaTipe}}"/>
                         </select>
                     </td>
                     <br><br>
@@ -57,7 +57,7 @@
                     <br><br>
 
                     <button class="btn btn-primary" type="submit">Submit</button>
-                    <a class="btn btn-primary" href="@{/barang}">Batal</a>
+                    <a class="btn btn-primary" th:href="@{/barang}">Batal</a>
                 </form>
             </div>
         </div>

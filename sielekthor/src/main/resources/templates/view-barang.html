@@ -21,12 +21,12 @@
                 <p th:text="'Stok Barang: ' + ${barang.stok}"></p>
                 <p th:text="'Garansi Toko: ' + ${barang.jumlahGaransi}"></p>
                 <p th:text="'Deskripsi: ' + ${barang.deskripsiBarang}"></p>
-                <p th:each="tipe: ${listTipe}" th:value="${tipe.idTipe}" th:text="'Tipe: ' + ${tipe.namaTipe}"></p>
+                <p th:text="'Tipe: ' + ${barang.id_tipe.namaTipe}"></p>
                 <p th:text="'Harga: ' + ${barang.hargaBarang}"></p>
             </div>
 
             <div class="justify-content-center">
-                <a class="btn btn-primary" href="/barang">Kembali</a>
+                <a class="btn btn-primary" th:href="@{/barang}">Kembali</a>
             </div>
         </div>
     </div>

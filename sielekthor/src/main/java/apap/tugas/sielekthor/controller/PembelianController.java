@@ -83,4 +83,34 @@ public class PembelianController {
             model.addAttribute("pembelian2", pembelian.getNoInvoice());
             return "hapus-pembelian";
     }
+
+    @GetMapping(value="/pembelian/cari")
+    public String displayPembelianByMemberDanTipeFormPage(
+            @ModelAttribute MemberModel member,
+            Model model
+    ){
+        List<MemberModel> listMember = memberService.getListMember();
+        model.addAttribute("listMember", listMember);
+        return "form-display-pembelian-by-member-tipe";
+    }
+
+    @GetMapping(value="/cari/pembelian")
+    public String displayPembelianByMemberDanTipeSubmitPage(
+            @RequestParam Long idMember,
+            @RequestParam int tipePembayaran,
+            @ModelAttribute MemberModel member,
+            Model model) {
+        List<PembelianModel> listPembelian = pembelianService.getListPembelian();
+        ArrayList<PembelianModel> listPembelianFinal = new ArrayList<>();
+        for (PembelianModel i : listPembelian){
+            if (i.get_id_of_member() == idMember && i.get_id_of_metode_bayar() == tipePembayaran){
+                listPembelianFinal.add(i);
+            }
+        }
+        List<MemberModel> listMember = memberService.getListMember();
+        model.addAttribute("listMember", listMember);
+
+        model.addAttribute("listPembelianFinal", listPembelianFinal);
+        return "display-pembelian-by-member-tipe";
+    }
 }
